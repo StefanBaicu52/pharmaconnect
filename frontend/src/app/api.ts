@@ -81,8 +81,7 @@ export interface SuspiciousUser {
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
-export const API_BASE = 'https://localhost:3001';
-
+export const API_BASE = import.meta.env.VITE_API_URL || 'https://localhost:3001';
 // ─── Token helper ─────────────────────────────────────────────────────────────
 
 function getToken(): string | null {
