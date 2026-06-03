@@ -1,0 +1,40 @@
+type Query {
+    prescriptions(page: Int, pageSize: Int, status: String, search: String): PrescriptionPage
+    prescription(id: Int!): Prescription
+    doctors(page: Int, pageSize: Int): DoctorPage
+    doctor(id: Int!): Doctor
+}
+
+type PrescriptionPage {
+    data: [Prescription]
+    page: Int
+    pageSize: Int
+    total: Int
+    totalPages: Int
+}
+
+type DoctorPage {
+    data: [Doctor]
+    page: Int
+    pageSize: Int
+    total: Int
+    totalPages: Int
+}
+
+type Prescription {
+    id: Int
+    medicationName: String
+    doctor: String
+    date: String
+    status: String
+    daysRemaining: Int
+    note: String
+}
+
+type Doctor {
+    id: Int
+    name: String
+    specialty: String
+    phone: String
+    address: String
+}
