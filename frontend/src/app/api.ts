@@ -1,4 +1,4 @@
-// ─── Types ────────────────────────────────────────────────────────────────────
+﻿// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export type PrescriptionStatus = 'PENDING' | 'DELIVERED';
 
@@ -79,10 +79,10 @@ export interface SuspiciousUser {
   suspiciousReason: string;
 }
 
-// ─── Config ───────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const API_BASE = 'https://pharmaconnect-production-e92d.up.railway.app';
-// ─── Token helper ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Token helper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function getToken(): string | null {
   const saved = localStorage.getItem('auth');
@@ -95,7 +95,7 @@ function authHeaders(): Record<string, string> {
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
-// ─── Core fetch ───────────────────────────────────────────────────────────────
+// â”€â”€â”€ Core fetch â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
@@ -107,7 +107,7 @@ async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
     ...options,
   });
 
-  // Assignment 4 Bronze: sliding-window session — update stored token if server refreshed it
+  // Assignment 4 Bronze: sliding-window session â€” update stored token if server refreshed it
   const refreshedToken = res.headers.get('X-Refreshed-Token');
   if (refreshedToken && (window as any).__updateAuthToken) {
     (window as any).__updateAuthToken(refreshedToken);
@@ -121,7 +121,7 @@ async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
   return res.json();
 }
 
-// ─── Offline sync queue ───────────────────────────────────────────────────────
+// â”€â”€â”€ Offline sync queue â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export interface SyncOperation {
   id: string;
@@ -159,7 +159,7 @@ export async function replaySyncQueue(): Promise<{ replayed: number; failed: num
   return { replayed, failed };
 }
 
-// ─── Prescription API ─────────────────────────────────────────────────────────
+// â”€â”€â”€ Prescription API â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const prescriptionApi = {
   getAll: (params: { page?: number; pageSize?: number; status?: string; search?: string } = {}) => {
@@ -196,7 +196,7 @@ export const prescriptionApi = {
     apiFetch<{ deleted: number }>('/prescriptions', { method: 'DELETE', body: JSON.stringify({ ids }) }),
 };
 
-// ─── Doctor API ───────────────────────────────────────────────────────────────
+// â”€â”€â”€ Doctor API â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const doctorApi = {
   getAll: (params: { page?: number; pageSize?: number; search?: string } = {}) => {
@@ -213,7 +213,7 @@ export const doctorApi = {
   delete:           (id: number)           => apiFetch<void>(`/doctors/${id}`, { method: 'DELETE' }),
 };
 
-// ─── Order API ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Order API â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const orderApi = {
   getAll:     (params = {}) => apiFetch<PagedResponse<Order>>(`/orders?${new URLSearchParams(params as Record<string,string>)}`),
@@ -224,13 +224,13 @@ export const orderApi = {
   delete:     (id: number)  => apiFetch<void>(`/orders/${id}`, { method: 'DELETE' }),
 };
 
-// ─── Chat API ─────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Chat API â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const chatApi = {
   getHistory: (roomId: string) => apiFetch<ChatMessage[]>(`/chat/${roomId}/history`),
 };
 
-// ─── Admin API (Gold) ─────────────────────────────────────────────────────────
+// â”€â”€â”€ Admin API (Gold) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const adminApi = {
   getLogs:          (page = 0, size = 20)  => apiFetch<{ data: ActionLog[]; total: number; totalPages: number }>(`/admin/logs?page=${page}&size=${size}`),
@@ -239,7 +239,7 @@ export const adminApi = {
   getLogsByUser:    (userId: number)       => apiFetch<ActionLog[]>(`/admin/logs/user/${userId}`),
 };
 
-// ─── GraphQL ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ GraphQL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export async function graphql<T = unknown>(query: string, variables?: Record<string,unknown>): Promise<T> {
   const res = await fetch(`${API_BASE}/graphql`, {
@@ -252,7 +252,7 @@ export async function graphql<T = unknown>(query: string, variables?: Record<str
   return json.data as T;
 }
 
-// ─── Generator API (Silver) ───────────────────────────────────────────────────
+// â”€â”€â”€ Generator API (Silver) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export const generatorApi = {
   start: (intervalSeconds = 3, batchSize = 2) =>
