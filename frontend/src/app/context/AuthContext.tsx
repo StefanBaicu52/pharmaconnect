@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useRef, type ReactNode } from 'react';
+﻿import { createContext, useContext, useState, useEffect, useRef, type ReactNode } from 'react';
 
 export interface AuthUser {
   token: string;
@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const res = await fetch('http://localhost:3001/auth/login', {
+    const res = await fetch('https://pharmaconnect-production-e92d.up.railway.app/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
